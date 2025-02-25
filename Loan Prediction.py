@@ -1,12 +1,15 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+
 data = pd.read_csv("LoanApprovalPrediction.csv")
+
 print("\nShape :", data.shape)
 print("\nNoise Data Count Prediction: ", data.isnull().sum())
 print("\nMean= ",data['Dependents'].mean() )
 print("Median= ",data['Dependents'].median())
 print("Mode= ",data['Dependents'].mode())
+
 result1 = data['Dependents'].fillna(data['Dependents'].median())
 print(result1)
 plt.title('Dependents')
@@ -17,9 +20,11 @@ plt.scatter(x,result1)
 plt.show()
 plt.boxplot(result1)
 plt.show()
+
 print("\nMean= ",data['LoanAmount'].mean())
 print("Median= ",data['LoanAmount'].median())
 print("Mode= ",data['LoanAmount'].mode())
+
 result2 = data['LoanAmount'].fillna(data['LoanAmount'].mean())
 print(result2)
 plt.title('LoanAmount')
@@ -30,9 +35,11 @@ plt.scatter(x,result2)
 plt.show()
 plt.boxplot(result2)
 plt.show()
+
 print("\nMean= ",data['Loan_Amount_Term'].mean())
 print("Median= ",data['Loan_Amount_Term'].median())
 print("Mode= ",data['Loan_Amount_Term'].mode())
+
 result3 = data['Loan_Amount_Term'].fillna(data['Loan_Amount_Term'].median())
 print(result3)
 plt.title('Loan_Amount_Term')
@@ -41,6 +48,7 @@ plt.show()
 x=np.arange(0,598,1)
 plt.scatter(x,result3)
 plt.show()
+
 print("\nMean= ",data['Credit_History'].mean())
 print("Median= ",data['Credit_History'].median())
 print("Mode= ",data['Credit_History'].mode())
@@ -52,12 +60,12 @@ plt.show()
 x=np.arange(0,598,1)
 plt.scatter(x,result4)
 plt.show()
+
 data['Dependents'] = result1
 data['LoanAmount'] = result2
 data['Loan_Amount_Term'] = result3
 data['Credit_History'] = result4
 
-#2nd Review
 
 import seaborn as sns
 fig, ax = plt.subplots(2,2, figsize=(10,10))
@@ -67,6 +75,7 @@ sns.countplot(x='Gender', data = data, ax=ax[0][1])
 sns.countplot(x="Education", hue = "Loan_Status", data = data, palette="RdBu", ax=ax[1][0])
 sns.countplot(x = "Gender" , hue = "Loan_Status", data= data, palette= "rocket", ax=ax[1][1])
 plt.show()
+
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score 
@@ -74,7 +83,6 @@ from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-
 
 X = data.drop("Loan_Status", axis=1)
 y = data["Loan_Status"]
